@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#100f27">
+  <meta name="description" content="NEONWAVE — laboratoire musical rétro pour Android et navigateur. Lecteur local, playlists et effets audio.">
+  <title>NEONWAVE :: MUSIC SYSTEM</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="pink">
+<main class="shell" id="app">
+  <div class="system-bar"><span><span class="status-dot"></span> NEONWAVE OS // <span id="runtimeName">WEB AUDIO SYSTEM</span></span><span class="right">SYS 02:04:98 • <span id="sysClock">00:00</span> • AUDIO ENGINE READY</span></div>
+  <header class="masthead">
+    <div class="identity"><div class="identity-logo">N<span style="position:absolute;font-size:9px;bottom:4px;right:5px;">W</span></div><div><h1>NEON<i>WAVE</i><span style="font-size:11px;letter-spacing:.03em;vertical-align:top;margin-left:7px;color:var(--acid)">™</span></h1><p>PERSONAL AUDIO CYBERSPACE [ v.01 ]</p></div></div>
+    <nav class="topnav" aria-label="Fenêtres"><button class="nav active" data-tab="player"><span class="tiny">01</span> PLAYER.EXE</button><button class="nav" data-tab="library"><span class="tiny">02</span> LIBRARY.EXE</button><button class="nav" data-tab="fx"><span class="tiny">03</span> FX_RACK.EXE</button><button class="nav" data-tab="visual"><span class="tiny">04</span> VISUALIZER.EXE</button></nav>
+  </header>
+  <section class="desktop">
+    <section class="window libwin" id="libraryWindow" aria-label="Bibliothèque musicale">
+      <div class="titlebar"><span>▣ LIBRARY.EXE <span class="micro" style="opacity:.7">/ LOCAL STORAGE</span></span><div class="controls"><span>_</span><span>□</span><span>×</span></div></div>
+      <div class="window-body">
+        <div class="panel-heading"><b>✦ YOUR AUDIO ARCHIVE</b><span class="counter" id="trackCount">000 TRACKS</span></div>
+        <div class="input-frame"><span>⌕</span><input id="search" aria-label="Chercher une musique" type="search" placeholder="Search audio files..." autocomplete="off"></div>
+        <div class="filterbar" id="filters"><button class="on" data-filter="all">ALL FILES</button><button data-filter="artist">ARTISTS</button><button data-filter="album">ALBUMS</button><button data-filter="folder">FOLDERS</button><button data-filter="playlist">PLAYLISTS</button></div>
+        <div class="files" id="trackList"><div class="placeholder">NO AUDIO FILES DETECTED<br>CLICK [ IMPORT AUDIO ] TO START</div></div>
+        <div class="lib-footer"><button class="btn primary" id="importFiles">✚ IMPORT AUDIO</button><button class="btn" id="importFolder">▤ FOLDER</button><button class="btn" id="rescanBtn" title="Scanner les fichiers musicaux Android">⟳ SCAN</button></div>
+        <input type="file" id="fileInput" accept="audio/*,.mp3,.wav,.flac,.ogg,.m4a,.aac,.opus" multiple>
+        <input type="file" id="folderInput" accept="audio/*" multiple webkitdirectory directory style="display:none">
+        <div class="playlist-side"><div class="panel-heading" style="margin:0"><b>♫ PLAYLIST DATABASE</b><button id="createPlaylist" class="btn" style="padding:5px 8px">+ NEW</button></div><div id="playlistPills" class="playlist-items"><span class="muted small">No playlists yet</span></div></div>
+        <div class="micro muted" style="padding-top:12px">FILTER: TRACKS ≥ 00:30 <span id="scanStatus" style="float:right;color:var(--acid)">READY</span></div>
+      </div>
+    </section>
+    <section class="window playerwin mob-visible" id="playerWindow" aria-label="Lecteur audio">
+      <div class="titlebar"><span>▶ PLAYER.EXE <span class="micro" style="opacity:.75">/ SESSION 001</span></span><div class="controls"><span>_</span><span>□</span><span>×</span></div></div>
+      <div class="window-body">
+        <div class="now"><div class="cover" id="coverArt"><div class="art-label mono">[ NOW TRANSMITTING ]</div><div class="planet"></div><div class="orbit-text">NEON<br>WAVE</div><span class="pixel">0098 // <span id="coverState">STANDBY</span></span></div>
+          <div class="player-meta"><div><div class="tiny-header">◆ CURRENTLY SELECTED</div><div class="nowtitle" id="nowTitle">WAITING FOR<br>YOUR SIGNAL</div><div class="nowartist" id="nowArtist">Importe ta musique pour commencer</div><div class="media-tags"><span id="codecTag">LOCAL AUDIO</span><span id="effectTag">FX: CLEAN</span></div></div><div class="equalizer-mini" id="miniEq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="seek-row"><span id="elapsed" class="timecode">00:00</span><input type="range" id="seek" min="0" max="1000" step="1" value="0" aria-label="Position de lecture"><span id="total" class="timecode">00:00</span></div>
+        <div class="transport"><div class="transport-left"><button id="shuffle" title="Aléatoire" aria-label="Lecture aléatoire">⇄</button><button id="prev" title="Précédente" aria-label="Précédente">⏮</button><button id="play" class="play" title="Lecture/Pause" aria-label="Lecture/Pause">▶</button><button id="next" title="Suivante" aria-label="Suivante">⏭</button><button id="repeat" title="Répéter" aria-label="Mode répétition">↻</button></div><div class="volume"><span>◖))</span><input type="range" min="0" max="100" value="82" id="volume" aria-label="Volume"></div></div>
+        <div class="player-bottom mono"><span>▧ STEREO OUTPUT</span><span>BUFFER <b>OK</b></span><span id="audioMode">ENGINE: WEB</span></div>
+      </div>
+    </section>
+    <section class="window visualwin" id="visualWindow" aria-label="Visualiseur audio">
+      <div class="titlebar"><span>▥ VISUALIZER.EXE</span><div class="controls"><span>_</span><span>□</span><span>×</span></div></div>
+      <div class="window-body"><div class="panel-heading"><b>VIRTUAL SPECTRUM</b><span class="counter">60 FPS OPT.</span></div><div class="visual-inner"><span class="vis-overlay">V-SCOPE // <span id="vizLabel">WAVEFORM</span></span><canvas id="visualizer" width="640" height="380" aria-label="Visualisation animée de la musique"></canvas></div><div class="vis-stamp"><span>FREQ: 20 Hz - 20k</span><span id="signalText">NO SIGNAL</span></div><div class="visual-switches"><button class="btn primary" data-vis="bars">▥ SPECTRUM</button><button class="btn" data-vis="wave">⌁ OSCILLOSCOPE</button><button class="btn" data-vis="orbit">◎ CYBER ORBIT</button><button class="btn" data-vis="matrix">▦ DATA RAIN</button></div><div class="visual-decor"><div class="ascii"> /\__/\\<br>( o  o )<br>  >  &lt;</div><div class="vis-bottom">NOISE IS A LANGUAGE<br>MEMORIES ARE FREQUENCIES<br>/// NO SIGNAL LOST ///</div></div></div>
+    </section>
+    <section class="window fxwin" id="fxWindow" aria-label="Effets audio">
+      <div class="titlebar"><span>⚙ FX_RACK.EXE <span class="micro" style="opacity:.7">/ SIGNAL PROCESSOR</span></span><div class="controls"><span>_</span><span>□</span><span>×</span></div></div>
+      <div class="window-body"><div class="panel-heading"><b>✧ AUDIO EXPERIMENT STATION</b><span class="counter" id="fxPower">SIGNAL ON</span></div>
+        <div class="fxgrid"><div><div class="group-title">01 / TAPE &amp; TIME</div>
+          <div class="control"><label for="speed">SPEED</label><input id="speed" data-fx="speed" type="range" min="0.50" max="1.75" step="0.01" value="1"><output id="speedValue">1.00×</output></div>
+          <div class="control"><label for="pitch">PITCH</label><input id="pitch" data-fx="pitch" type="range" min="-12" max="12" step="1" value="0"><output id="pitchValue">0 st</output></div>
+          <div class="control"><label for="reverb">REVERB</label><input id="reverb" data-fx="reverb" type="range" min="0" max="100" value="0"><output id="reverbValue">0%</output></div>
+          <div class="control"><label for="flutter">WOW/FLUTTER</label><input id="flutter" data-fx="flutter" type="range" min="0" max="100" value="0"><output id="flutterValue">0%</output></div>
+          <div class="control"><label for="pan">STEREO PAN</label><input id="pan" data-fx="pan" type="range" min="-100" max="100" value="0"><output id="panValue">C</output></div></div>
+          <div><div class="group-title">02 / FILTERS &amp; DECAY</div>
+          <div class="control"><label for="bass">BASS</label><input id="bass" data-fx="bass" type="range" min="-12" max="12" value="0"><output id="bassValue">0 dB</output></div>
+          <div class="control"><label for="lofi">LO-FI FILTER</label><input id="lofi" data-fx="lofi" type="range" min="0" max="100" value="0"><output id="lofiValue">0%</output></div>
+          <div class="control"><label for="crunch">DISTORTION</label><input id="crunch" data-fx="crunch" type="range" min="0" max="100" value="0"><output id="crunchValue">0%</output></div>
+          <div class="control"><label for="bits">BITCRUSHER</label><input id="bits" data-fx="bits" type="range" min="0" max="100" value="0"><output id="bitsValue">0%</output></div>
+          <div class="control"><label for="eightD">8D AUTOPAN</label><input id="eightD" data-fx="eightD" type="range" min="0" max="100" value="0"><output id="eightDValue">0%</output></div>
+          <div class="toggle-row"><button class="pill on" id="fxToggle">● FX ENABLED</button><button class="pill" id="savePreset">✚ SAVE PRESET</button></div></div>
+          <div><div class="group-title">03 / PRESET MEMORY</div><div class="preset-grid" id="presets">
+             <button class="preset sel" data-preset="clean">◉ CLEAN<small>FLAT SIGNAL</small></button><button class="preset" data-preset="slowed">☾ SLOWED<small>+ REVERB</small></button><button class="preset" data-preset="nightcore">✦ NIGHTCORE<small>HIGH ENERGY</small></button><button class="preset" data-preset="cassette">▣ CASSETTE<small>WORN TAPE</small></button><button class="preset" data-preset="liminal">◈ LIMINAL<small>EMPTY HALLS</small></button><button class="preset" data-preset="8d">◎ ORBIT 8D<small>HEADPHONES</small></button><button class="preset" data-preset="crushed"># CRUSHED<small>DIGITAL DECAY</small></button><button class="preset" data-preset="vapor">☁ VAPOR<small>1999 MEMORY</small></button>
+          </div><div class="fx-footer"><span class="small" id="fxEngineDesc">REALTIME FX DSP</span><button class="btn" id="resetFx">↺ RESET</button></div></div></div>
+      </div>
+    </section>
+  </section>
+  <footer class="footer-banner"><span>© 2026 <strong>NEONWAVE</strong> // PERSONAL AUDIO SYSTEM</span><span class="header-extra">AUDIO FILES NEVER LEAVE THIS DEVICE</span><button id="themeBtn" class="btn" style="padding:6px 8px">✦ SKIN: <span id="themeLabel">PINK</span></button></footer>
+</main>
+<nav class="mobile-dock" aria-label="Navigation principale"><button class="on" data-tab="player"><span>▶</span>PLAYER</button><button data-tab="library"><span>▤</span>LIBRARY</button><button data-tab="fx"><span>☷</span>FX RACK</button><button data-tab="visual"><span>▥</span>VISUAL</button></nav>
+<div class="modal-cover" id="modal"><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="titlebar"><span id="modalTitle">SYSTEM DIALOG.EXE</span><div class="controls"><button id="modalClose" aria-label="Fermer">✕</button></div></div><div class="dialog-body" id="modalBody"></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
